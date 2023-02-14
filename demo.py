@@ -8,6 +8,8 @@ ZKS = "　" # full width space
 def romajify(text, system="hepburn"):
     out = ""
     katsu = Cutlet(system)
+    hello = katsu.romaji("こんにち", capitalize=False) + "wa"
+    katsu.add_exception("こんにちは", hello)
     for line in text.split("\n"):
         for chunk in line.split(ZKS):
             for sent in senter.segment(chunk):
