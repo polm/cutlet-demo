@@ -50,7 +50,6 @@ text = st.text_area('変換したいテキストを入力してください',
 systems = {"ヘボン式": "hepburn", "訓令式": "kunrei"}
 system = systems[system]
 
-#if st.button("変換"):
 "# 変換結果"
 
 st.write(romajify(text, system))
