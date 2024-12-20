@@ -44,10 +44,13 @@ system = st.radio(
 text = st.text_area('変換したいテキストを入力してください', 
         "吾輩は猫である。名前はまだ無い。")
 
+"CTRL+Enter を押すか、入力欄の外にクリックすると変換が行われます。"
+
 
 systems = {"ヘボン式": "hepburn", "訓令式": "kunrei"}
 system = systems[system]
 
+#if st.button("変換"):
 "# 変換結果"
 
 st.write(romajify(text, system))
