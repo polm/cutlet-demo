@@ -1,8 +1,22 @@
+import re
+
 import streamlit as st
 from cutlet import Cutlet
-import pysbd 
 
-senter = pysbd.Segmenter(language="ja", clean=False)
+def senter(text):
+    """Split long Japanese text into sentences in the most basic way possible.
+
+    The purpose of this function is to avoid dealing with overly long input, so
+    it doesn't have to be grammatical sentences.
+    """
+    sentpunct = r"[\.?!。！？．]"
+    offset = 0
+    for match in re.finditer(sentpunct, text):
+        start, end = match.span()
+        yield text[offset:end]
+        offset = end
+    yield text[offset:]
+
 ZKS = "　" # full width space
 
 def romajify(text, system="hepburn"):
@@ -12,7 +26,7 @@ def romajify(text, system="hepburn"):
     katsu.add_exception("こんにちは", hello)
     for line in text.split("\n"):
         for chunk in line.split(ZKS):
-            for sent in senter.segment(chunk):
+            for sent in senter(chunk):
                 out += katsu.romaji(sent) + " "
             out += ZKS
         out += "\n"
